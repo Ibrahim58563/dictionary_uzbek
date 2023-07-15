@@ -123,7 +123,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       decoration: InputDecoration(
                         focusedBorder: InputBorder.none,
                         border: InputBorder.none,
-                        hintText: 'kalima yoxing',
+                        hintText: 'kalima yoming',
                         hintStyle: TextStyle(
                             color: AppColors.secondary.withOpacity(0.3)),
                         prefixIcon: const Icon(
