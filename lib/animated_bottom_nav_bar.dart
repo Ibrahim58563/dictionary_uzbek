@@ -2,6 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:dictionary/utils/app_colors.dart';
 import 'package:dictionary/whole_dictionary.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'bookmark_screen.dart';
 import 'contact_us_screen.dart';
@@ -29,6 +30,7 @@ class _AnimatedBottomNavBarState extends State<AnimatedBottomNavBar> {
     return Scaffold(
       body: _selectedWidget,
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         onPressed: () {
           setState(() {
             _selectedWidget = const SearchScreen();

@@ -66,8 +66,6 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 20,
+              height: 80,
             ),
             SvgPicture.asset(
               "assets/dictionary_logo.svg",

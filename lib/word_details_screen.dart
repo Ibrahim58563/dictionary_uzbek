@@ -4,9 +4,10 @@ import 'package:dictionary/utils/app_colors.dart';
 import 'package:dictionary/utils/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
-
+import 'package:share_plus/share_plus.dart';
 import 'models/word_hive_model.dart';
 
 class WordDetailsScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class WordDetailsScreen extends StatefulWidget {
 final bookMarksBox = Hive.box<WordHiveAdapter>('bookMarks');
 
 class _WordDetailsScreenState extends State<WordDetailsScreen> {
+  bool isBookmarked = false;
   void saveBookMarks(String word, String translation) {
     setState(() {
       Hive.box<WordHive>('bookMarks').add(WordHive(
@@ -104,10 +106,15 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Icon(
-                              Icons.share,
-                              size: 32,
-                              color: AppColors.primary,
+                            InkWell(
+                              onTap: () {
+                                Share.share('Check out this amazing content!');
+                              },
+                              child: const Icon(
+                                Icons.share,
+                                size: 32,
+                                color: AppColors.primary,
+                              ),
                             ),
                             InkWell(
                               onTap: () async {
@@ -116,17 +123,34 @@ class _WordDetailsScreenState extends State<WordDetailsScreen> {
                                   widget.translatedWord,
                                 );
                                 log("added to bookMark");
+                                setState(() {
+                                  isBookmarked = true;
+                                });
                               },
-                              child: const Icon(
-                                CupertinoIcons.bookmark,
+                              child: Icon(
+                                isBookmarked
+                                    ? CupertinoIcons.bookmark_fill
+                                    : CupertinoIcons.bookmark,
                                 size: 32,
                                 color: AppColors.primary,
                               ),
                             ),
-                            const Icon(
-                              Icons.copy,
-                              size: 32,
-                              color: AppColors.primary,
+                            InkWell(
+                              onTap: () {
+                                Clipboard.setData(ClipboardData(
+                                  text: widget.translatedWord,
+                                ));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Copied to clipboard'),
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                Icons.copy,
+                                size: 32,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ],
                         ),
